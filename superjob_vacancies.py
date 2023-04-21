@@ -9,24 +9,60 @@ from itertools import count
 from dotenv import load_dotenv
 
 
-def predict_rub_salary_sj(vacancy):
-    min_salary = vacancy['payment_from']
-    max_salary = vacancy['payment_to']
-    if (not min_salary and not max_salary) or vacancy['currency'] != 'rub':
-        return None
-    if not min_salary:
-        return int(max_salary) * 0.8
-    if not max_salary:
-        return int(min_salary) * 1.2
-    return int((int(min_salary) + int(max_salary)) / 2)
+def predict_salary(salary_from: int, salary_to: int):
+    if not salary_from:
+        return int(salary_to * 0.8)
+    if not salary_to:
+        return int(salary_from * 1.2)
+    return int((salary_from + salary_to)/2)
 
 
-def save_to_file(response, file_name):
-    with codecs.open(file_name, 'w', 'utf-8') as json_file:
-        json.dump(response.json(), json_file, indent=4, sort_keys=True)
+def predict_rub_salary_sj(vacancies):
+    data_by_language = {}
+
+    predicted_salaries = []
+
+    for vacancy in vacancies:
+        salary_from = vacancy['payment_from']
+        salary_to = vacancy['payment_to']
+        if (not salary_from and not salary_to) or vacancy['currency'] != 'rub':
+            continue
+
+        predicted_salary = predict_salary(salary_from, salary_to)
+        if predicted_salary:
+            predicted_salaries.append(predicted_salary)
+
+    data_by_language['vacancies_processed:'] = len(predicted_salaries)
+    data_by_language['average_salary:'] = int(mean(predicted_salaries))
+
+    return data_by_language
 
 
-if __name__ == '__main__':
+def get_all_vacancies(url, params, headers):
+    all_vacancies = []
+    for page in count(0):
+        params['page'] = page
+        while True:
+            try:
+                response = requests.get(url, params=params, headers=headers)
+                response.raise_for_status()
+                break
+            except ConnectionError:
+                print('Пытаюсь восстановить подключение...')
+                time.sleep(5)
+
+        vacancies = response.json()['objects']
+        for vacancy in vacancies:
+            all_vacancies.append(vacancy)
+        print(f'Загрузил страницу {page}')
+
+        if not response.json()['more']:
+            break
+
+    return all_vacancies, response.json()['total']
+
+
+def get_sj_data_by_language(language):
     superjob_url = 'https://api.superjob.ru/2.0/vacancies/'
 
     load_dotenv()
@@ -36,14 +72,21 @@ if __name__ == '__main__':
     params = {
         'catalogues': 48,
         'town': 4,
+        'keyword': f'Программист {language}',
+        'count': 100
     }
 
-    response = requests.get(superjob_url, headers=headers, params=params)
-    response.raise_for_status()
+    print('Загружаю вакансии SJ по запросу "{0}"'.format(params['keyword']))
 
-    save_to_file(response, 'vacancies_sj.json')
+    vacancies, total = get_all_vacancies(superjob_url, params, headers)
 
-    vacancies = response.json()['objects']
-    for vacancy in vacancies:
-        salary = predict_rub_salary_sj(vacancy)
-        print("{0}, {1}, {2}]".format(vacancy['profession'], vacancy['town']['title'], salary))
+    data_by_language = predict_rub_salary_sj(vacancies)
+    data_by_language['vacancies_found:'] = total
+
+    return data_by_language
+
+
+if __name__ == '__main__':
+    language = 'Python'
+    data = get_sj_data_by_language(language)
+    print(data)
