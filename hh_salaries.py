@@ -34,8 +34,8 @@ def predict_rub_salary_hh(vacancies):
         if predicted_salary:
             predicted_salaries.append(predicted_salary)
 
-    data_by_language['vacancies_processed:'] = len(predicted_salaries)
-    data_by_language['average_salary:'] = int(mean(predicted_salaries))
+    data_by_language['vacancies_processed'] = len(predicted_salaries)
+    data_by_language['average_salary'] = int(mean(predicted_salaries))
 
     return data_by_language
 
@@ -72,6 +72,6 @@ def get_hh_data_by_language(language):
     vacancies, found = get_all_vacancies(hh_base_url, params)
 
     data_by_language = predict_rub_salary_hh(vacancies)
-    data_by_language['vacancies_found:'] = found
+    data_by_language['vacancies_found'] = found
 
     return data_by_language
