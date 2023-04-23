@@ -1,16 +1,9 @@
 import requests
-import json
-import codecs
 import time
 
 from statistics import mean
 from itertools import count
 from salaries import predict_salary
-
-
-def save_to_file(response, file_name):
-    with codecs.open(file_name, 'w', 'utf-8') as json_file:
-        json.dump(response.json(), json_file, indent=4, sort_keys=True)
 
 
 def predict_rub_salary_hh(vacancies):
