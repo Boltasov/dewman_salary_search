@@ -42,8 +42,6 @@ def get_all_hh_vacancies(url, params):
                 print('Пытаюсь восстановить подключение...')
                 time.sleep(5)
 
-        print(f'Загрузил страницу {page}')
-
         if page >= response.json()['pages']:
             break
 

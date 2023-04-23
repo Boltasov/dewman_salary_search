@@ -45,7 +45,6 @@ def get_all_sj_vacancies(url, params, headers):
         vacancies = response.json()['objects']
         for vacancy in vacancies:
             all_vacancies.append(vacancy)
-        print(f'Загрузил страницу {page}')
 
         if not response.json()['more']:
             break
