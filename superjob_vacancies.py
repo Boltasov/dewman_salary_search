@@ -29,7 +29,7 @@ def predict_rub_salary_sj(vacancies):
     return data_by_language
 
 
-def get_all_vacancies(url, params, headers):
+def get_all_sj_vacancies(url, params, headers):
     all_vacancies = []
     for page in count(0):
         params['page'] = page
@@ -69,7 +69,7 @@ def get_sj_data_by_language(language):
 
     print('Загружаю вакансии SJ по запросу "{0}"'.format(params['keyword']))
 
-    vacancies, total = get_all_vacancies(superjob_url, params, headers)
+    vacancies, total = get_all_sj_vacancies(superjob_url, params, headers)
 
     data_by_language = predict_rub_salary_sj(vacancies)
     data_by_language['vacancies_found'] = total

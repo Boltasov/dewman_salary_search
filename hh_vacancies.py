@@ -39,12 +39,16 @@ def get_all_vacancies(url, params):
         response = requests.get(url, params)
         response.raise_for_status()
         vacancies = response.json()['items']
-        for vacancy in vacancies:
-            all_vacancies.append(vacancy)
+        while True:
+            try:
+                for vacancy in vacancies:
+                    all_vacancies.append(vacancy)
+            except ConnectionError:
+                print('Пытаюсь восстановить подключение...')
+                time.sleep(5)
         print(f'Загрузил страницу {page}')
 
         if page >= response.json()['pages']:
-        # if page >= 1:
             break
 
     return all_vacancies, response.json()['found']

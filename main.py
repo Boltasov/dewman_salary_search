@@ -14,6 +14,12 @@ def add_to_table(table_data, data_by_language):
     )
 
 
+def show_table(table_data, table_name):
+    table = AsciiTable(table_data)
+    table.title = table_name
+    print(table.table)
+
+
 if __name__ == '__main__':
     languages = [
         'JavaScript',
@@ -35,11 +41,5 @@ if __name__ == '__main__':
         add_to_table(hh_table_data, get_hh_data_by_language(language))
         add_to_table(sj_table_data, get_sj_data_by_language(language))
 
-    table = AsciiTable(hh_table_data)
-    table.title = 'HeadHunter Moscow'
-    print(table.table)
-
-    # print(json.dumps(data_by_languages, indent=4))
-    table = AsciiTable(sj_table_data)
-    table.title = 'SuperJob Moscow'
-    print(table.table)
+    show_table(hh_table_data, 'HeadHunter Moscow')
+    show_table(sj_table_data, 'SuperJob Moscow')
