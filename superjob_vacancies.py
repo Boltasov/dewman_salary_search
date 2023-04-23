@@ -1,7 +1,5 @@
 import requests
 import os
-import json
-import codecs
 import time
 
 from statistics import mean

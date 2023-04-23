@@ -1,10 +1,10 @@
 import requests
-import os
 import json
 import codecs
+
 from statistics import mean
 from itertools import count
-import time
+
 
 
 def save_to_file(response, file_name):
@@ -51,8 +51,8 @@ def get_all_vacancies(url, params):
             all_vacancies.append(vacancy)
         print(f'Загрузил страницу {page}')
 
-        # if page >= response.json()['pages']:
-        if page >= 1:
+        if page >= response.json()['pages']:
+        # if page >= 1:
             break
 
     return all_vacancies, response.json()['found']

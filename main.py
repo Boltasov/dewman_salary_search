@@ -1,10 +1,3 @@
-import requests
-import os
-import json
-import codecs
-from statistics import mean
-from itertools import count
-import time
 from hh_salaries import get_hh_data_by_language
 from superjob_vacancies import get_sj_data_by_language
 from terminaltables import AsciiTable
