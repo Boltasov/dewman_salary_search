@@ -1,12 +1,12 @@
 # Salary search
 
-The script counts approximate average salary for 8 most popular programming languages. Script uses HeadHunter and SuperJob data about vacancies.
+The script counts approximate average salary for 8 most popular programming languages. Script uses public data about vacancies from the HeadHunter and SuperJob.
 
 ### How to install
 
-To use se script you need to get SuperJob API token. Go [here](https://api.superjob.ru/), get an account and generate your personal token.
+To use the script you need to get SuperJob API token. Go [here](https://api.superjob.ru/), get an account and generate your personal token.
 
-This token you should put to a ```'.env'``` file. Create the file in the directory where ``main.py`` located. Put this to the ``.env`` file:
+You should put this token to a ```'.env'``` file. Create the file in the directory where ``main.py`` located. Put this to the ``.env`` file:
 ```
 SUPERJOB_TOKEN='Put_here_your_token'
 ```
@@ -22,7 +22,7 @@ To execute script use terminal. Execute this command from the project directory:
 ```
 python main.py
 ```
-Firstly it will inform you of data downloading process. Then it will show two tables with data about average salary and numbers of vacancies found on mentioned sites.
+Firstly it will inform you about data downloading process. Then it will show two tables with data about average salary and numbers of vacancies found on the mentioned sites.
 
 ### Project Goals
 
