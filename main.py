@@ -1,4 +1,4 @@
-from hh_salaries import get_hh_data_by_language
+from hh_vacancies import get_hh_data_by_language
 from superjob_vacancies import get_sj_data_by_language
 from terminaltables import AsciiTable
 
