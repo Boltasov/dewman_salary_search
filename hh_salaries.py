@@ -4,20 +4,12 @@ import codecs
 
 from statistics import mean
 from itertools import count
-
+from salaries import predict_salary
 
 
 def save_to_file(response, file_name):
     with codecs.open(file_name, 'w', 'utf-8') as json_file:
         json.dump(response.json(), json_file, indent=4, sort_keys=True)
-
-
-def predict_salary(salary_from: int, salary_to: int):
-    if not salary_from:
-        return int(salary_to * 0.8)
-    if not salary_to:
-        return int(salary_from * 1.2)
-    return int((salary_from + salary_to)/2)
 
 
 def predict_rub_salary_hh(vacancies):

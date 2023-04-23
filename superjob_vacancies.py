@@ -5,14 +5,7 @@ import time
 from statistics import mean
 from itertools import count
 from dotenv import load_dotenv
-
-
-def predict_salary(salary_from: int, salary_to: int):
-    if not salary_from:
-        return int(salary_to * 0.8)
-    if not salary_to:
-        return int(salary_from * 1.2)
-    return int((salary_from + salary_to)/2)
+from salaries import predict_salary
 
 
 def predict_rub_salary_sj(vacancies):
