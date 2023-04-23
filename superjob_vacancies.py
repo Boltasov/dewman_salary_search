@@ -75,9 +75,3 @@ def get_sj_data_by_language(language):
     data_by_language['vacancies_found'] = total
 
     return data_by_language
-
-
-if __name__ == '__main__':
-    language = 'Python'
-    data = get_sj_data_by_language(language)
-    print(data)
