@@ -1,6 +1,7 @@
 import requests
 import json
 import codecs
+import time
 
 from statistics import mean
 from itertools import count
@@ -32,7 +33,7 @@ def predict_rub_salary_hh(vacancies):
     return data_by_language
 
 
-def get_all_vacancies(url, params):
+def get_all_hh_vacancies(url, params):
     all_vacancies = []
     for page in count(0):
         params['page'] = page
@@ -43,9 +44,11 @@ def get_all_vacancies(url, params):
             try:
                 for vacancy in vacancies:
                     all_vacancies.append(vacancy)
+                break
             except ConnectionError:
                 print('Пытаюсь восстановить подключение...')
                 time.sleep(5)
+
         print(f'Загрузил страницу {page}')
 
         if page >= response.json()['pages']:
@@ -65,7 +68,7 @@ def get_hh_data_by_language(language):
     }
 
     print('Загружаю вакансии HH по запросу "{0}"'.format(params['text']))
-    vacancies, found = get_all_vacancies(hh_base_url, params)
+    vacancies, found = get_all_hh_vacancies(hh_base_url, params)
 
     data_by_language = predict_rub_salary_hh(vacancies)
     data_by_language['vacancies_found'] = found
