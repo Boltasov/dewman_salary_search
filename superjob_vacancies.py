@@ -9,7 +9,7 @@ from salaries import predict_salary
 
 
 def predict_rub_salary_sj(vacancies):
-    data_by_language = {}
+    salary_by_language = {}
 
     predicted_salaries = []
 
@@ -23,10 +23,10 @@ def predict_rub_salary_sj(vacancies):
         if predicted_salary:
             predicted_salaries.append(predicted_salary)
 
-    data_by_language['vacancies_processed'] = len(predicted_salaries)
-    data_by_language['average_salary'] = int(mean(predicted_salaries))
+    salary_by_language['vacancies_processed'] = len(predicted_salaries)
+    salary_by_language['average_salary'] = int(mean(predicted_salaries))
 
-    return data_by_language
+    return salary_by_language
 
 
 def get_all_sj_vacancies(url, params, headers):
@@ -52,7 +52,7 @@ def get_all_sj_vacancies(url, params, headers):
     return all_vacancies, response.json()['total']
 
 
-def get_sj_data_by_language(language):
+def get_sj_salary_by_language(language):
     superjob_url = 'https://api.superjob.ru/2.0/vacancies/'
 
     load_dotenv()
@@ -70,7 +70,7 @@ def get_sj_data_by_language(language):
 
     vacancies, total = get_all_sj_vacancies(superjob_url, params, headers)
 
-    data_by_language = predict_rub_salary_sj(vacancies)
-    data_by_language['vacancies_found'] = total
+    salary_by_language = predict_rub_salary_sj(vacancies)
+    salary_by_language['vacancies_found'] = total
 
-    return data_by_language
+    return salary_by_language

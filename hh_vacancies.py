@@ -7,7 +7,7 @@ from salaries import predict_salary
 
 
 def predict_rub_salary_hh(vacancies):
-    data_by_language = {}
+    salary_by_language = {}
 
     predicted_salaries = []
 
@@ -20,10 +20,10 @@ def predict_rub_salary_hh(vacancies):
         if predicted_salary:
             predicted_salaries.append(predicted_salary)
 
-    data_by_language['vacancies_processed'] = len(predicted_salaries)
-    data_by_language['average_salary'] = int(mean(predicted_salaries))
+    salary_by_language['vacancies_processed'] = len(predicted_salaries)
+    salary_by_language['average_salary'] = int(mean(predicted_salaries))
 
-    return data_by_language
+    return salary_by_language
 
 
 def get_all_hh_vacancies(url, params):
@@ -48,7 +48,7 @@ def get_all_hh_vacancies(url, params):
     return all_vacancies, response.json()['found']
 
 
-def get_hh_data_by_language(language):
+def get_hh_salary_by_language(language):
     hh_base_url = 'https://api.hh.ru/vacancies'
 
     params = {
@@ -61,7 +61,7 @@ def get_hh_data_by_language(language):
     print('Загружаю вакансии HH по запросу "{0}"'.format(params['text']))
     vacancies, found = get_all_hh_vacancies(hh_base_url, params)
 
-    data_by_language = predict_rub_salary_hh(vacancies)
-    data_by_language['vacancies_found'] = found
+    salary_by_language = predict_rub_salary_hh(vacancies)
+    salary_by_language['vacancies_found'] = found
 
-    return data_by_language
+    return salary_by_language

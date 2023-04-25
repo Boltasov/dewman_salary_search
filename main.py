@@ -1,21 +1,21 @@
-from hh_vacancies import get_hh_data_by_language
-from superjob_vacancies import get_sj_data_by_language
+from hh_vacancies import get_hh_salary_by_language
+from superjob_vacancies import get_sj_salary_by_language
 from terminaltables import AsciiTable
 
 
-def add_to_table(table_data, data_by_language):
-    table_data.append(
+def add_to_table(table_content, salary_by_language):
+    table_content.append(
         [
             language,
-            data_by_language['vacancies_found'],
-            data_by_language['vacancies_processed'],
-            data_by_language['average_salary']
+            salary_by_language['vacancies_found'],
+            salary_by_language['vacancies_processed'],
+            salary_by_language['average_salary']
         ]
     )
 
 
-def show_table(table_data, table_name):
-    table = AsciiTable(table_data)
+def show_table(table_content, table_name):
+    table = AsciiTable(table_content)
     table.title = table_name
     print(table.table)
 
@@ -31,15 +31,14 @@ if __name__ == '__main__':
         'C#',
         'C ',
     ]
-    data_by_languages = {}
 
-    hh_table_data = [['Язык программирования', 'Вакансий найдено',
-                      'Вакансий обработано', 'Средняя зарплата']]
-    sj_table_data = hh_table_data.copy()
+    hh_table_content = [['Язык программирования', 'Вакансий найдено',
+                         'Вакансий обработано', 'Средняя зарплата']]
+    sj_table_content = hh_table_content.copy()
 
     for language in languages:
-        add_to_table(hh_table_data, get_hh_data_by_language(language))
-        add_to_table(sj_table_data, get_sj_data_by_language(language))
+        add_to_table(hh_table_content, get_hh_salary_by_language(language))
+        add_to_table(sj_table_content, get_sj_salary_by_language(language))
 
-    show_table(hh_table_data, 'HeadHunter Moscow')
-    show_table(sj_table_data, 'SuperJob Moscow')
+    show_table(hh_table_content, 'HeadHunter Moscow')
+    show_table(sj_table_content, 'SuperJob Moscow')
