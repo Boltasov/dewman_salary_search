@@ -1,10 +1,8 @@
 import requests
-import os
 import time
 
 from statistics import mean
 from itertools import count
-from dotenv import load_dotenv
 from salaries import predict_salary
 
 
@@ -52,16 +50,12 @@ def get_all_sj_vacancies(url, params, headers):
     return all_vacancies, vacancies['total']
 
 
-def get_sj_salary_by_language(language):
+def get_sj_salary_by_language(language, headers):
     superjob_url = 'https://api.superjob.ru/2.0/vacancies/'
     vacancies_per_page = 100
     moscow_city_code = 4
     it_catalogue_id = 48
 
-    load_dotenv()
-    headers = {
-        'X-Api-App-Id': os.environ['SUPERJOB_TOKEN'],
-    }
     params = {
         'catalogues': it_catalogue_id,
         'town': moscow_city_code,
