@@ -30,22 +30,23 @@ def get_all_hh_vacancies(url, params):
     all_vacancies = []
     for page in count(0):
         params['page'] = page
-        response = requests.get(url, params)
-        response.raise_for_status()
-        vacancies = response.json()['items']
         while True:
             try:
-                for vacancy in vacancies:
-                    all_vacancies.append(vacancy)
+                response = requests.get(url, params)
+                response.raise_for_status()
                 break
             except ConnectionError:
                 print('Пытаюсь восстановить подключение...')
                 time.sleep(5)
 
-        if page >= response.json()['pages']:
+        vacancies = response.json()['items']
+        for vacancy in vacancies:
+            all_vacancies.append(vacancy)
+
+        if page >= vacancies['pages']:
             break
 
-    return all_vacancies, response.json()['found']
+    return all_vacancies, vacancies['found']
 
 
 def get_hh_salary_by_language(language):

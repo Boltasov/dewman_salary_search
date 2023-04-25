@@ -46,10 +46,10 @@ def get_all_sj_vacancies(url, params, headers):
         for vacancy in vacancies:
             all_vacancies.append(vacancy)
 
-        if not response.json()['more']:
+        if not vacancies['more']:
             break
 
-    return all_vacancies, response.json()['total']
+    return all_vacancies, vacancies['total']
 
 
 def get_sj_salary_by_language(language):
