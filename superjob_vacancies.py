@@ -54,16 +54,19 @@ def get_all_sj_vacancies(url, params, headers):
 
 def get_sj_salary_by_language(language):
     superjob_url = 'https://api.superjob.ru/2.0/vacancies/'
+    vacancies_per_page = 100
+    moscow_city_code = 4
+    it_catalogue_id = 48
 
     load_dotenv()
     headers = {
         'X-Api-App-Id': os.environ['SUPERJOB_TOKEN'],
     }
     params = {
-        'catalogues': 48,
-        'town': 4,
+        'catalogues': it_catalogue_id,
+        'town': moscow_city_code,
         'keyword': f'Программист {language}',
-        'count': 100
+        'count': vacancies_per_page
     }
 
     print('Загружаю вакансии SJ по запросу "{0}"'.format(params['keyword']))

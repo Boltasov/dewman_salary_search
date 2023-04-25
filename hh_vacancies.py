@@ -50,12 +50,13 @@ def get_all_hh_vacancies(url, params):
 
 def get_hh_salary_by_language(language):
     hh_base_url = 'https://api.hh.ru/vacancies'
+    vacancies_per_page = 100
 
     params = {
         'text': f'Программист {language}',
         'area': '1',
         'only_with_salary': True,
-        'per_page': 100
+        'per_page': vacancies_per_page
     }
 
     print('Загружаю вакансии HH по запросу "{0}"'.format(params['text']))
