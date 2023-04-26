@@ -39,9 +39,8 @@ def get_all_hh_vacancies(url, params):
                 print('Пытаюсь восстановить подключение...')
                 time.sleep(5)
 
-        vacancies = response.json()['items']
-        for vacancy in vacancies:
-            all_vacancies.append(vacancy)
+        vacancies = response.json()
+        all_vacancies.extend(vacancies['items'])
 
         if page >= vacancies['pages']:
             break

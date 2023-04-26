@@ -40,9 +40,8 @@ def get_all_sj_vacancies(url, params, headers):
                 print('Пытаюсь восстановить подключение...')
                 time.sleep(5)
 
-        vacancies = response.json()['objects']
-        for vacancy in vacancies:
-            all_vacancies.append(vacancy)
+        vacancies = response.json()
+        all_vacancies.extend(vacancies['objects'])
 
         if not vacancies['more']:
             break
